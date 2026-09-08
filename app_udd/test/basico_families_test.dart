@@ -39,8 +39,9 @@ void main() {
       final tuples = fam['tuples'] as List;
       if (tuples.isEmpty) continue;
       for (final t in tuples) {
-        final values = List<dynamic>.from((t as Map)['values'] as List);
-        final q = gen(values, Random(123));
+        final tuple = t as Map<String, dynamic>;
+        final values = List<dynamic>.from(tuple['values'] as List);
+        final q = gen(tuple, Random(123));
         checkInvariants(q);
         final p0 = iv(values, 0);
         final p1 = iv(values, 1);

@@ -4,16 +4,8 @@ import '../../entities/question.dart';
 import '../latex_format.dart';
 import '../mcq_factory.dart';
 import '../rational.dart';
-
-typedef FamilyGenerator = Question Function(List<dynamic> tuple, Random rng);
-
-String _pn(int p) {
-  if (p == 1) return 'n';
-  if (p == -1) return '-n';
-  return '${p}n';
-}
-
-String _signed(int v) => v >= 0 ? '+$v' : '$v';
+import 'family.dart';
+import 'family_text.dart';
 
 Question basicoF1(int p, int q, int k, {Random? rng}) {
   if (p == 0) throw ArgumentError('p debe ser no nulo');
@@ -23,7 +15,7 @@ Question basicoF1(int p, int q, int k, {Random? rng}) {
   return mcq(
     familyId: 'basico-f1',
     level: 'Básico',
-    text: 'Si \\(a_n=${_pn(p)}${_signed(q)}\\), determine \\(a_{$k}\\).',
+    text: 'Si \\(a_n=${pnTerm(p)}${signedTerm(q)}\\), determine \\(a_{$k}\\).',
     correctText: wrapMath('$ans'),
     distractors: [
       wrapMath('${p * (k - 1) + q}'),
@@ -33,7 +25,7 @@ Question basicoF1(int p, int q, int k, {Random? rng}) {
     ],
     solution: [
       'Para \\(n=$k\\), sustituimos directamente en el término general:',
-      '\\[a_{$k}=$p($k)${_signed(q)}=$ans\\]',
+      '\\[a_{$k}=$p($k)${signedTerm(q)}=$ans\\]',
       'Por lo tanto, \\(a_{$k}=$ans\\).',
     ],
     rng: rng,
@@ -61,7 +53,7 @@ Question basicoF2(int r, int s, int k, {Random? rng}) {
     ],
     solution: [
       'Identificamos el patrón de numeradores y denominadores:',
-      '\\[a_n=\\frac{n${_signed(r)}}{n${_signed(s)}}\\]',
+      '\\[a_n=\\frac{n${signedTerm(r)}}{n${signedTerm(s)}}\\]',
       'Sustituyendo \\(n=$k\\):',
       '\\[a_{$k}=\\frac{${k + r}}{${k + s}}=${ans.toLatex()}\\]',
     ],
@@ -77,7 +69,7 @@ Question basicoF3(int a1, int d, int k, {Random? rng}) {
     familyId: 'basico-f3',
     level: 'Básico',
     text:
-        'Si \\(b_1=$a1\\) y \\(b_{n+1}=b_n${_signed(d)}\\), determine \\(b_{$k}\\).',
+        'Si \\(b_1=$a1\\) y \\(b_{n+1}=b_n${signedTerm(d)}\\), determine \\(b_{$k}\\).',
     correctText: wrapMath('$ans'),
     distractors: [
       wrapMath('${a1 + k * d}'),
@@ -105,7 +97,7 @@ Question basicoF4(int p, int q, {Random? rng}) {
     familyId: 'basico-f4',
     level: 'Básico',
     text:
-        'Determine si \\(c_n=${_pn(p)}${_signed(q)}\\) es creciente o decreciente.',
+        'Determine si \\(c_n=${pnTerm(p)}${signedTerm(q)}\\) es creciente o decreciente.',
     correctText:
         growing ? 'Estrictamente creciente' : 'Estrictamente decreciente',
     distractors: const [
@@ -133,7 +125,7 @@ Question basicoF5(int l, int m, int r, {Random? rng}) {
     familyId: 'basico-f5',
     level: 'Básico',
     text:
-        'Sea \\(d_n=$l-\\frac{$m}{n${_signed(r)}}\\). ¿Cuál es su menor término?',
+        'Sea \\(d_n=$l-\\frac{$m}{n${signedTerm(r)}}\\). ¿Cuál es su menor término?',
     correctText: wrapMath(first.toLatex()),
     distractors: [
       wrapMath('$l'),
@@ -159,7 +151,7 @@ Question basicoF6(int a, int b, int c, int d, {Random? rng}) {
     familyId: 'basico-f6',
     level: 'Básico',
     text:
-        'Calcule \\(\\displaystyle\\lim_{n\\to\\infty}\\frac{${a}n${_signed(b)}}{${c}n${_signed(d)}}\\).',
+        'Calcule \\(\\displaystyle\\lim_{n\\to\\infty}\\frac{${a}n${signedTerm(b)}}{${c}n${signedTerm(d)}}\\).',
     correctText: wrapMath(ans.toLatex()),
     distractors: [
       wrapMath(Rational(c, a).toLatex()),
@@ -169,7 +161,7 @@ Question basicoF6(int a, int b, int c, int d, {Random? rng}) {
     ],
     solution: [
       'Dividimos numerador y denominador por \\(n\\):',
-      '\\[\\lim_{n\\to\\infty}\\frac{$a${_signed(b)}/n}{$c${_signed(d)}/n}=\\frac{$a}{$c}=${ans.toLatex()}\\]',
+      '\\[\\lim_{n\\to\\infty}\\frac{$a${signedTerm(b)}/n}{$c${signedTerm(d)}/n}=\\frac{$a}{$c}=${ans.toLatex()}\\]',
       'Por lo tanto, el límite es \\(${ans.toLatex()}\\).',
     ],
     rng: rng,
@@ -208,21 +200,20 @@ Question basicoF7(int u, int l, {Random? rng}) {
   );
 }
 
-int _i(List<dynamic> t, int pos) => (t[pos] as num).toInt();
-
 final Map<String, FamilyGenerator> basicoGenerators = {
   'seq_explicit_terms': (t, rng) =>
-      basicoF1(_i(t, 0), _i(t, 1), _i(t, 2), rng: rng),
+      basicoF1(tupleInt(t, 0), tupleInt(t, 1), tupleInt(t, 2), rng: rng),
   'seq_pattern_recognition': (t, rng) =>
-      basicoF2(_i(t, 0), _i(t, 1), _i(t, 2), rng: rng),
+      basicoF2(tupleInt(t, 0), tupleInt(t, 1), tupleInt(t, 2), rng: rng),
   'seq_explicit_to_recursive': (t, rng) =>
-      basicoF3(_i(t, 0), _i(t, 1), _i(t, 2), rng: rng),
+      basicoF3(tupleInt(t, 0), tupleInt(t, 1), tupleInt(t, 2), rng: rng),
   'seq_immediate_monotonicity': (t, rng) =>
-      basicoF4(_i(t, 0), _i(t, 1), rng: rng),
+      basicoF4(tupleInt(t, 0), tupleInt(t, 1), rng: rng),
   'seq_elementary_bound': (t, rng) =>
-      basicoF5(_i(t, 0), _i(t, 1), _i(t, 2), rng: rng),
-  'seq_direct_algebraic_limit': (t, rng) =>
-      basicoF6(_i(t, 0), _i(t, 1), _i(t, 2), _i(t, 3), rng: rng),
+      basicoF5(tupleInt(t, 0), tupleInt(t, 1), tupleInt(t, 2), rng: rng),
+  'seq_direct_algebraic_limit': (t, rng) => basicoF6(
+      tupleInt(t, 0), tupleInt(t, 1), tupleInt(t, 2), tupleInt(t, 3),
+      rng: rng),
   'seq_guided_convergent_recurrence': (t, rng) =>
-      basicoF7(_i(t, 0), _i(t, 1), rng: rng),
+      basicoF7(tupleInt(t, 0), tupleInt(t, 1), rng: rng),
 };
