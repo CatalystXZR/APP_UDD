@@ -34,5 +34,17 @@ ios/Flutter/flutter_export_environment.sh
 .idea/
 
 # Supabase local
-supabase/.branches
-supabase/.temp
+**/supabase/.branches
+**/supabase/.temp
+
+# Flutter extra
+**/doc/api/
+.pub-cache/
+.pub/
+/coverage/
+app.*.symbols
+app.*.map.json
+/android/app/debug
+/android/app/profile
+/android/app/release
+.widget_preview/
