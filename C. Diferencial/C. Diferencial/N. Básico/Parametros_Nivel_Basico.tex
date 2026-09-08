@@ -1,0 +1,119 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,array,enumitem,xcolor,geometry,tcolorbox}
+\geometry{left=1.7cm,right=1.7cm,top=1.5cm,bottom=1.6cm}
+\setlength{\parindent}{0pt}
+\definecolor{azul}{HTML}{17365D}
+\definecolor{claro}{HTML}{EAF1F8}
+\newcommand{\familia}[2]{\section*{Familia #1. #2}}
+\newcommand{\campo}[1]{\textcolor{azul}{\textbf{#1}}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{azul} SUCESIONES Y LÍMITES}\par
+{\Large Banco paramétrico -- Nivel básico}
+\end{center}
+\begin{tcolorbox}[colback=claro,colframe=azul]
+Estas familias son originales. Los parámetros se eligen desde las tuplas autorizadas;
+no deben combinarse libremente cuando se indique dependencia. El nivel básico privilegia
+una técnica por pregunta, índices pequeños y resultados enteros o fracciones simples.
+\end{tcolorbox}
+
+\familia{1}{Términos de una sucesión explícita}
+\campo{Plantilla:}
+\[
+ a_n=pn+q.
+\]
+Pedir tres términos consecutivos y $a_k$.\par
+\campo{Condiciones:} $p\neq0$, $1\leq k\leq12$ y $|a_k|\leq40$.\par
+\campo{Tuplas recomendadas $(p,q,k)$:}
+\[
+ (2,1,8),\ (3,-2,7),\ (-2,9,6),\ (4,-3,5).
+\]
+\campo{Control:} $a_k=pk+q$.
+
+\familia{2}{Reconocimiento de patrón}
+\campo{Plantilla:}
+\[
+ a_n=\frac{n+r}{n+s}.
+\]
+Mostrar los primeros cuatro términos y pedir el término general y $a_k$.\par
+\campo{Condiciones:} $r,s\in\mathbb Z$, $s\geq1$, $r\neq s$, $5\leq k\leq12$.\par
+\campo{Tuplas recomendadas $(r,s,k)$:}
+\[
+ (1,3,8),\ (2,5,7),\ (3,4,10),\ (-1,2,9).
+\]
+\campo{Control:} mantener denominadores positivos y menores que $16$.
+
+\familia{3}{De forma explícita a recursiva}
+\campo{Plantilla:}
+\[
+ b_n=a_1+(n-1)d.
+\]
+Pedir $b_1$, la recurrencia y un término posterior.\par
+\campo{Condiciones:} $a_1,d\in\mathbb Z$, $d\neq0$, $|d|\leq5$; usar
+$b_{n+1}=b_n+d$.\par
+\campo{Tuplas recomendadas $(a_1,d,k)$:}
+\[
+ (3,2,9),\ (7,-1,10),\ (-2,3,8),\ (10,-2,7).
+\]
+\campo{Control:} $b_k=a_1+(k-1)d$.
+
+\familia{4}{Monotonía inmediata}
+\campo{Plantilla:}
+\[
+ c_n=pn+q.
+\]
+Pedir decidir si la sucesión es creciente o decreciente mediante
+$c_{n+1}-c_n$.\par
+\campo{Condiciones:} $p\in\{-4,-3,-2,2,3,4\}$ y $|q|\leq6$.\par
+\campo{Regla de control:}
+\[
+ c_{n+1}-c_n=p.
+\]
+Si $p>0$ es estrictamente creciente; si $p<0$ es estrictamente decreciente.
+
+\familia{5}{Acotación elemental}
+\campo{Plantilla:}
+\[
+ d_n=L-\frac{m}{n+r}.
+\]
+Pedir demostrar una cota superior y encontrar el menor término.\par
+\campo{Condiciones:} $L,m,r\in\mathbb N$, $1\leq m\leq6$, $0\leq r\leq3$ y
+$m$ múltiplo de $r+1$ cuando se desee un primer término entero.\par
+\campo{Tuplas recomendadas $(L,m,r)$:}
+\[
+ (4,2,1),\ (5,3,2),\ (6,4,1),\ (3,2,0).
+\]
+\campo{Control:} $d_1=L-m/(r+1)$ y $d_n<L$.
+
+\familia{6}{Límite algebraico directo}
+\campo{Plantilla:}
+\[
+ e_n=\frac{an+b}{cn+d}.
+\]
+Pedir calcular el límite dividiendo por $n$.\par
+\campo{Condiciones:} $a,c\in\mathbb N$, $c\neq0$, $|b|,|d|\leq5$,
+$cn+d>0$ para $n\geq1$ y $a/c$ entero o fracción irreducible sencilla.\par
+\campo{Tuplas recomendadas $(a,b,c,d)$:}
+\[
+ (2,1,1,3),\ (3,-1,2,2),\ (4,3,2,1),\ (5,-2,3,4).
+\]
+\campo{Control:} $\displaystyle\lim e_n=a/c$.
+
+\familia{7}{Recurrencia convergente guiada}
+\campo{Plantilla:}
+\[
+ x_1=u,\qquad x_{n+1}=\frac{x_n+L}{2}.
+\]
+Pedir calcular tres términos, conjeturar monotonía y hallar el límite.\par
+\campo{Condiciones:} $u,L\in\mathbb Z$, $u\neq L$, $|u-L|\in\{2,4,8\}$.
+Si $u<L$, la sucesión es creciente; si $u>L$, es decreciente.\par
+\campo{Tuplas recomendadas $(u,L)$:}
+\[
+ (0,4),\ (1,5),\ (8,4),\ (10,2).
+\]
+\campo{Control:} límite $L$ y fórmula
+$x_n=L+(u-L)2^{-(n-1)}$.
+
+\end{document}

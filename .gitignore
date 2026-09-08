@@ -1,0 +1,38 @@
+# Secrets locales (nunca commitear)
+.env
+*.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+.android/
+*.apk
+*.aab
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.synctex.gz
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+
+# macOS / editores
+.DS_Store
+.vscode/
+.idea/
+
+# Supabase local
+supabase/.branches
+supabase/.temp

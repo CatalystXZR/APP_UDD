@@ -1,0 +1,130 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,array,enumitem,xcolor,geometry,tcolorbox}
+\geometry{left=1.7cm,right=1.7cm,top=1.5cm,bottom=1.6cm}
+\setlength{\parindent}{0pt}
+\definecolor{azul}{HTML}{17365D}
+\definecolor{claro}{HTML}{EAF1F8}
+\newcommand{\familia}[2]{\section*{Familia #1. #2}}
+\newcommand{\campo}[1]{\textcolor{azul}{\textbf{#1}}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{azul} SUCESIONES Y LÍMITES}\par
+{\Large Banco paramétrico -- Nivel medio}
+\end{center}
+\begin{tcolorbox}[colback=claro,colframe=azul]
+Nivel de referencia de la primera guía. Cada pregunta exige cálculo y una justificación
+breve. Las tuplas fueron elegidas para evitar operaciones extensas y mantener resultados
+exactos. No intercambiar componentes entre tuplas dependientes.
+\end{tcolorbox}
+
+\familia{1}{Patrón alternante y cálculo de términos}
+\campo{Plantilla:}
+\[
+ a_n=(-1)^{n+h}\frac{pn+q}{n+r},\qquad h\in\{0,1\}.
+\]
+Pedir cuatro términos, uno posterior y explicar el efecto de $h$.\par
+\campo{Condiciones:} $p\in\{2,3,4\}$, $|q|\leq4$, $r\in\{1,2,3,4\}$,
+$pn+q>0$ para $n\geq1$ y $5\leq k\leq10$.\par
+\campo{Tuplas $(p,q,r,h,k)$:}
+\[
+ (2,3,4,1,8),\ (3,1,2,0,7),\ (4,-1,3,1,6),\ (2,1,1,0,9).
+\]
+
+\familia{2}{Conversión explícita-recursiva}
+\campo{Plantilla:}
+\[
+ b_n=L+Cq^{n-1}.
+\]
+Pedir una recurrencia de primer orden y comprobarla.\par
+\campo{Condiciones:} $q\in\{2,3,-2\}$, $C\neq0$, $|C|\leq4$, $|L|\leq5$;
+usar
+\[
+ b_{n+1}=q b_n+(1-q)L,\qquad b_1=L+C.
+\]
+\campo{Tuplas $(L,C,q)$:}
+\[
+ (3,2,2),\ (-1,3,2),\ (2,-1,3),\ (1,2,-2).
+\]
+
+\familia{3}{Monotonía racional}
+\campo{Plantilla:}
+\[
+ c_n=\frac{An+B}{Cn+D}.
+\]
+Pedir determinar la monotonía mediante diferencia.\par
+\campo{Condiciones:} $C>0$, $Cn+D>0$ para $n\geq1$, $AD-BC\neq0$ y
+$|A|,|B|,|C|,|D|\leq6$.\par
+\campo{Control:}
+\[
+ c_{n+1}-c_n=\frac{AD-BC}{(Cn+D)(Cn+C+D)}.
+\]
+\campo{Tuplas $(A,B,C,D)$:}
+\[
+ (4,-1,2,3),\ (3,2,2,5),\ (2,5,3,1),\ (5,1,2,4).
+\]
+
+\familia{4}{Acotación por una asíntota horizontal}
+\campo{Plantilla:}
+\[
+ d_n=L+\frac{K}{n+r}.
+\]
+Pedir monotonía, una cota alcanzada y otra no alcanzada.\par
+\campo{Condiciones:} $K\neq0$, $r\geq0$ y $n+r>0$. Si $K>0$, decrece hacia
+$L$; si $K<0$, crece hacia $L$.\par
+\campo{Tuplas $(L,K,r)$:}
+\[
+ (3,4,1),\ (5,-3,2),\ (-1,2,1),\ (2,-4,3).
+\]
+\campo{Control:} extremo alcanzado $d_1=L+K/(r+1)$; límite $L$.
+
+\familia{5}{Límite racionalizable}
+\campo{Plantilla:}
+\[
+ e_n=\sqrt{p^2n^2+qn+r}-pn.
+\]
+Pedir racionalizar y calcular el límite.\par
+\campo{Condiciones:} $p\in\{1,2,3,4\}$, $q$ múltiplo de $2p$ para obtener
+$q/(2p)$ entero o semientero, y el radicando debe ser positivo para $n\geq1$.\par
+\campo{Tuplas $(p,q,r)$:}
+\[
+ (1,4,1),\ (2,4,3),\ (3,6,2),\ (4,8,1).
+\]
+\campo{Control:} $\displaystyle\lim e_n=q/(2p)$.
+
+\familia{6}{Recurrencia afín convergente}
+\campo{Plantilla:}
+\[
+ x_1=u,\qquad x_{n+1}=\rho x_n+(1-\rho)L.
+\]
+Pedir demostrar monotonía, acotación y convergencia.\par
+\campo{Condiciones:} $0<\rho<1$; usar $u<L$ para crecimiento y $u>L$ para
+decrecimiento.\par
+\campo{Tuplas $(\rho,L,u)$:}
+\[
+ \left(\tfrac12,4,0\right),\
+ \left(\tfrac13,3,0\right),\
+ \left(\tfrac14,2,6\right),\
+ \left(\tfrac23,5,8\right).
+\]
+\campo{Control:} $x_n=L+(u-L)\rho^{n-1}$ y $\lim x_n=L$.
+
+\familia{7}{Teorema del sándwich}
+\campo{Plantilla:}
+\[
+ y_n=\varepsilon_n\frac{an+b}{n^2+c},
+\qquad |\varepsilon_n|\leq1.
+\]
+Usar $\varepsilon_n=(-1)^n$, $\sin n$ o $\cos(n^2)$ y pedir justificar el límite.\par
+\campo{Condiciones:} $a>0$, $b,c\geq0$, $a,b,c\leq6$.\par
+\campo{Tuplas $(\varepsilon_n,a,b,c)$:}
+\[
+ ((-1)^n,2,3,1),\ (\sin n,3,1,2),\ (\cos(n^2),4,2,3),\ ((-1)^{n+1},5,1,4).
+\]
+\campo{Control:}
+\[
+ |y_n|\leq\frac{an+b}{n^2+c}\longrightarrow0.
+\]
+
+\end{document}
